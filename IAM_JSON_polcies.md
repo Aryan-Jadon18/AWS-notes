@@ -1,46 +1,65 @@
-iam permissions:
-EC2:
--ec2:DescribeInstances = list ad view Ec2 instances
--ec2:StartInstances = start stopped instances
--ec2:StopInstances = stop running instances
--ec2:TerminateInstances = delete instances
--ec2:escribeSecurityGroups - view security groups
+# IAM Permissions Guide
 
-S3:
--s3:ListBucket - list objects in a bucket
--s3:GetObject - read/download objects
--s3:PutObject - upload objects
--s3:DeleteObject - remove objects
--s3:GetBuketLocation - check bucket region
+This document outlines commonly used IAM permissions for AWS services.  
+It includes examples in both XML and JSON formats, along with best practices for scoping permissions.
 
-IAM:
--iam:CreateUser - create new iam users
--iam:AttachUserPolicy - attach policies to users
--iam:CreateRole - create new roles
--iam:PassRole - allow services to assume roles
--iam:ListRoles - view exisiting roles
+---
 
-CloudFormation:
--cloudformation:CreateStack - create new stacks
--cloudformation:UpdateStack - update existing stacks
--cloudformation:DeleteStack - remove stacks
--cloudformation:DescribeStacks - view stack details
+## EC2 Permissions
+- `ec2:DescribeInstances` – List and view EC2 instances  
+- `ec2:StartInstances` – Start stopped instances  
+- `ec2:StopInstances` – Stop running instances  
+- `ec2:TerminateInstances` – Delete instances  
+- `ec2:DescribeSecurityGroups` – View security groups  
 
-CloudWatch:
--cloudwatch:PutMetricData - publish custom metrics
--cloudwatch:GetMetricStatistics - retrieve metric data
--cloudwatch:DescribeAlarms - view alarms
--cloudwatch:PutDashboard - create dashboards
+---
 
-XML example: less used(json is more often used in AWS)
+## S3 Permissions
+- `s3:ListBucket` – List objects in a bucket  
+- `s3:GetObject` – Read/download objects  
+- `s3:PutObject` – Upload objects  
+- `s3:DeleteObject` – Remove objects  
+- `s3:GetBucketLocation` – Check bucket region  
+
+---
+
+## IAM Permissions
+- `iam:CreateUser` – Create new IAM users  
+- `iam:AttachUserPolicy` – Attach policies to users  
+- `iam:CreateRole` – Create new roles  
+- `iam:PassRole` – Allow services to assume roles  
+- `iam:ListRoles` – View existing roles  
+
+---
+
+## CloudFormation Permissions
+- `cloudformation:CreateStack` – Create new stacks  
+- `cloudformation:UpdateStack` – Update existing stacks  
+- `cloudformation:DeleteStack` – Remove stacks  
+- `cloudformation:DescribeStacks` – View stack details  
+
+---
+
+## CloudWatch Permissions
+- `cloudwatch:PutMetricData` – Publish custom metrics  
+- `cloudwatch:GetMetricStatistics` – Retrieve metric data  
+- `cloudwatch:DescribeAlarms` – View alarms  
+- `cloudwatch:PutDashboard` – Create dashboards  
+
+---
+
+## Policy Examples
+
+### XML Example (less common, JSON preferred)
+```xml
 <Policy>
-	<Statement>
-		<Effect>Allow</Effect>
-		<Action>ec2:DescribeInstances</Action>
-		<Action>s3:GetObject</Action>
-		<Action>s3.PutObject</Action>
-		<Resource>*</Resource>
-	</Statement>
+  <Statement>
+    <Effect>Allow</Effect>
+    <Action>ec2:DescribeInstances</Action>
+    <Action>s3:GetObject</Action>
+    <Action>s3:PutObject</Action>
+    <Resource>*</Resource>
+  </Statement>
 </Policy>
 
 JSON:
@@ -74,3 +93,4 @@ this is a general-purpose developer policy.
 -For S3, restrict to "arn:aws:s3:::my-bucket/*".
 -For EC2, restrict to specific instance IDs
 -For IAM, be careful - iam:PassRole is powerful and should be limited to trusted roles.
+```
